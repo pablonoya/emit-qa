@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel
 
 from langchain.chains.question_answering import load_qa_chain
@@ -22,6 +24,18 @@ qa_chain = load_qa_chain(llm, chain_type="map_reduce")
 qa_document_chain = AnalyzeDocumentChain(combine_docs_chain=qa_chain)
 
 app = FastAPI()
+
+
+app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class Question(BaseModel):
